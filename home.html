@@ -4,977 +4,638 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabarivasan S P | Interactive Portfolio</title>
-
+    <title>Sabarivasan S P | UI/UX Designer & Full Stack Developer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
         :root {
-            --bg-color: #050000;
-            --text-main: #ffffff;
-            --text-muted: #ffffff;
-            --accent-primary: #ff3333;
-            --accent-secondary: #ffcc00;
-            --accent-glow: rgba(255, 51, 51, 0.2);
-            --card-bg: rgba(37, 5, 5, 0.7);
-            --border-light: rgba(255, 255, 255, 0.05);
-            --hover-bg: rgba(255, 51, 51, 0.1);
-            --surface: #0a0505;
-            --hero-gradient: linear-gradient(135deg, #ff3333 0%, #ffcc00 100%);
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --accent: #f472b6;
+            --bg: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+            --transition: 300ms ease-in-out;
+            --radius-lg: 24px;
+            --radius-md: 16px;
         }
 
-        .text-muted {
-            color: var(--text-muted) !important;
-            opacity: 1 !important;
-        }
-
-        [data-theme="light"] {
-            --bg-color: #ffffff;
-            --text-main: #000000;
-            --text-muted: #222222;
-            --accent-primary: #ff3333;
-            --accent-secondary: #ffcc00;
-            --accent-glow: rgba(255, 51, 51, 0.1);
-            --card-bg: rgba(240, 240, 240, 0.8);
-            --border-light: rgba(0, 0, 0, 0.08);
-            --hover-bg: rgba(255, 51, 51, 0.05);
-            --surface: #f5f5f5;
-            --hero-gradient: linear-gradient(135deg, #ff3333 0%, #cc0000 100%);
-        }
-
-        ::selection {
-            background: var(--accent-primary);
-            color: #fff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
             color: var(--text-main);
             overflow-x: hidden;
+            cursor: none;
             line-height: 1.6;
-            /* Restore default cursor */
-            position: relative;
         }
 
-        body::before {
-            content: "";
+        /* --- Premium Cursor --- */
+        .cursor-glow {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("https://grainy-gradients.vercel.app/noise.svg");
-            opacity: 0.05;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .bg-blob {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 51, 51, 0.07) 0%, rgba(255, 51, 51, 0) 70%);
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            pointer-events: none;
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .blob-1 {
-            top: -10%;
-            left: -10%;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .blob-2 {
-            bottom: -10%;
-            right: -10%;
+        /* --- Navbar --- */
+        .navbar {
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            background: rgba(248, 250, 252, 0.8);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.2rem 0;
+            transition: var(--transition);
         }
 
-        .blob-3 {
-            top: 40%;
-            left: 60%;
-            width: 400px;
-            height: 400px;
-        }
-
-        /* Custom Cursor Removed */
-
-        /* Background removed for minimalistic flat design */
-
-        /* --- Noora Cards --- */
-        .glass-container {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-light);
-            border-radius: 40px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
-        }
-
-        .glass-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        }
-
-        .hover-lift {
-            border-radius: 24px;
-        }
-
-        .hover-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .project-img:hover {
-            transform: scale(1.05);
-        }
-
-        /* --- Navigation --- */
         .navbar-brand {
-            font-family: 'Outfit', sans-serif;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--accent-primary);
-        }
-
-        .nav-hover {
-            position: relative;
-            transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 100px;
-        }
-
-        .nav-hover:hover {
+            font-size: 1.5rem;
+            letter-spacing: -1px;
             color: var(--text-main) !important;
-            background-color: var(--hover-bg);
         }
 
-
-
-        .social-icon {
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            padding: 10px;
-            border-radius: 50%;
-            background: transparent;
-            border: 1px solid var(--border-light);
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-muted) !important;
+            transition: var(--transition);
+            margin: 0 10px;
         }
 
-        .social-icon:hover {
-            color: var(--text-main);
-            background: var(--hover-bg);
-            border-color: rgba(0, 0, 0, 0.1);
+        .nav-link:hover {
+            color: var(--primary) !important;
         }
 
-        /* --- Hero Section Animations & Typography --- */
-        .hero-container {
+        /* --- Sections --- */
+        section {
+            padding: 120px 0;
             position: relative;
-            z-index: 10;
-            padding-top: clamp(6rem, 15vh, 10rem) !important;
-            padding-bottom: clamp(4rem, 10vh, 8rem) !important;
-            perspective: 1000px;
         }
 
-        .hero-text {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 900;
-            font-size: clamp(3rem, 11vw, 9rem);
-            line-height: 0.85;
-            letter-spacing: -0.06em;
-            text-transform: uppercase;
-            visibility: hidden;
-            /* Prevent flash before GSAP runs */
+        /* --- Hero --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding-top: 80px;
         }
 
-        /* Target the characters created by SplitType for precise clipping */
-        .hero-text .char {
-            background: linear-gradient(135deg, #ff3333 0%, #ffcc00 100%);
+        .hero-title {
+            font-size: clamp(3.5rem, 9vw, 6rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            display: inline-block;
         }
 
-        .hero-text .highlight {
-            color: var(--text-main);
-            display: inline-block;
-        }
-
-        .profile-img-container {
-            animation: heroReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .profile-hero-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: contain;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            background: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            padding: 10px;
-        }
-
-        .hero-description {
-            animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
-            opacity: 0;
-            font-size: 1.5rem;
+        .hero-tagline {
+            font-size: 1.25rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            font-weight: 400;
             max-width: 600px;
-            margin: 0 auto;
+            margin-bottom: 3rem;
         }
 
-        .hero-action {
-            animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-            opacity: 0;
-            transform-origin: center;
+        .floating-shape {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08), transparent 70%);
+            filter: blur(80px);
+            z-index: -1;
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-        @keyframes heroReveal {
+        @keyframes floatAnim {
             0% {
-                opacity: 0;
-                transform: translateY(60px) rotateX(15deg);
-                filter: blur(12px);
+                transform: translate(0, 0) scale(1);
             }
 
             100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0deg);
-                filter: blur(0);
+                transform: translate(50px, -30px) scale(1.1);
             }
         }
 
-        /* Noora Button */
-        .btn-main {
-            background: var(--accent-primary);
-            color: #000;
-            padding: 16px 40px;
-            border-radius: 100px;
+        /* --- Buttons --- */
+        .btn-premium {
+            padding: 16px 36px;
+            border-radius: var(--radius-md);
             font-weight: 600;
-            border: 1px solid var(--accent-primary);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            font-size: 1rem;
-            display: inline-block;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .btn-main:hover {
-            background: transparent;
-            color: var(--accent-primary);
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 0 30px rgba(255, 51, 51, 0.4);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
+            transition: var(--transition);
+            display: inline-flex;
             align-items: center;
             gap: 10px;
-            opacity: 0.6;
-            transition: opacity 0.3s;
+            text-decoration: none;
         }
 
-        .scroll-indicator:hover {
-            opacity: 1;
+        .btn-primary-premium {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.3);
         }
 
-        .mouse {
-            width: 26px;
-            height: 42px;
-            border: 2px solid #fff;
-            border-radius: 20px;
+        .btn-primary-premium:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.4);
+            color: white;
+        }
+
+        .btn-outline-premium {
+            border: 1px solid #e2e8f0;
+            background: transparent;
+            color: var(--text-main);
+        }
+
+        .btn-outline-premium:hover {
+            background: #f1f5f9;
+            transform: scale(1.03);
+        }
+
+        /* --- About --- */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .profile-frame {
             position: relative;
+            display: inline-block;
         }
 
-        .wheel {
-            width: 4px;
-            height: 8px;
-            background: #fff;
-            border-radius: 2px;
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: scroll-anim 2s infinite;
+        .profile-frame img {
+            width: 320px;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 12px solid white;
+            box-shadow: var(--shadow-soft);
         }
 
-        @keyframes scroll-anim {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, 0);
-            }
-
-            30% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-                transform: translate(-50%, 20px);
-            }
-        }
-
-        /* --- Skill Tags --- */
-        .tag {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 22px;
+        .skill-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #eef2ff;
+            color: var(--primary);
             border-radius: 100px;
             font-size: 0.9rem;
-            font-weight: 500;
-            margin: 6px;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-            cursor: default;
+            font-weight: 600;
+            margin: 5px;
+            transition: var(--transition);
         }
 
-        .tag:hover {
-            background: var(--hover-bg);
+        .skill-tag:hover {
+            background: var(--primary);
+            color: white;
             transform: translateY(-2px);
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
         }
 
-        .cert-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px 20px;
-            border-radius: 16px;
-            text-align: left;
-            transition: all 0.3s;
-            height: 100%;
-        }
-
-        .cert-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* --- Skill Cards --- */
-        .skill-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 24px;
-            text-align: left;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-            height: 100%;
-        }
-
-        .skill-box:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .skill-box svg {
-            color: #fff;
-            margin-bottom: 20px;
-            opacity: 0.8;
-            transition: transform 0.3s;
-        }
-
-        .skill-box:hover svg {
-            transform: scale(1.1) rotate(5deg);
-            opacity: 1;
-        }
-
-        .skill-category-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        /* --- Minimalist Project Grid --- */
+        /* --- Projects --- */
         .project-card {
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid #f1f5f9;
+            transition: var(--transition);
+            height: 100%;
         }
 
-        .project-image-wrapper {
-            border-radius: 28px;
-            overflow: hidden;
-            margin-bottom: 2rem;
-            position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
-            height: 250px;
-            /* Default height for mobile */
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-thumb {
+            height: 300px;
+            background: #f8fafc;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            padding: 20px;
         }
 
-        @media (min-width: 768px) {
-            .project-image-wrapper {
-                height: 400px;
-                /* Height for PC/tablet */
-            }
+        .project-thumb img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: 0.5s ease;
         }
 
-        .project-card:hover .project-image-wrapper {
-            transform: translateY(-12px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .project-image-wrapper img {
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            object-fit: contain !important;
-        }
-
-        .project-card:hover img {
+        .project-card:hover .project-thumb img {
             transform: scale(1.05);
         }
 
-        /* --- Marquee Footer --- */
-        .marquee-wrapper {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
+        /* --- Case Study --- */
+        .case-study-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
         }
 
-        .marquee-track {
-            display: inline-block;
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
         }
 
-        .marquee-text {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(3rem, 10vw, 8rem);
-            font-weight: 300;
+        .case-item h5 {
+            font-weight: 700;
+            margin-bottom: 1rem;
             color: var(--text-main);
-            display: inline-block;
-            padding-right: 100px;
-            letter-spacing: -2px;
-            opacity: 0.3;
         }
 
-        .line {
-            overflow: hidden;
+        .case-item p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* --- Contact --- */
+        .form-control {
+            border-radius: var(--radius-md);
+            padding: 14px 20px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
             display: inline-flex;
-            vertical-align: top;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: var(--transition);
         }
 
-        /* --- Global GSAP Elements --- */
-        .gsap-reveal {
-            opacity: 0;
-            visibility: hidden;
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            border-color: var(--primary);
         }
 
-        @media (min-width: 768px) {
-            .project-stagger {
-                margin-top: 5rem;
+        /* --- Responsive --- */
+        @media (max-width: 991px) {
+            section {
+                padding: 80px 0;
             }
-        }
 
-        @media (max-width: 991.98px) {
-            .navbar-collapse {
-                background: var(--card-bg);
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
-                margin-top: 1rem;
-                padding: 2rem;
-                border-radius: 24px;
-                border: 1px solid var(--border-light);
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .profile-frame img {
+                width: 240px;
+                height: 240px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Custom Cursor Element -->
-    <!-- Background Elements -->
-    <div class="bg-blob blob-1"></div>
-    <div class="bg-blob blob-2"></div>
-    <div class="bg-blob blob-3"></div>
+    <div class="cursor-glow"></div>
 
-
-
-
-
-    <nav class="navbar navbar-expand-lg py-4 fixed-top"
-        style="background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: none; z-index: 1000;">
-        <div class="container container-content">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-                <div
-                    style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff3333 0%, #ffcc00 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #000;">
-                    <span style="font-size: 1.2rem; font-weight: 900;">S</span>
-                </div>
-                PORTFOLIO
-            </a>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container text-main">
+            <a class="navbar-brand" href="#">SABARIVASAN</a>
             <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" style="filter: invert(1);">
+                data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto fw-bold gap-lg-4">
-                    <li class="nav-item"><a class="nav-link nav-hover" href="#about">About Me</a></li>
-                    <li class="nav-item"><a class="nav-link nav-hover" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link nav-hover" href="#contact">Contact</a></li>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#case-study">Strategy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
-                <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0 justify-content-center">
-                    <button id="themeToggle" class="nav-hover bg-transparent border-0 p-2"
-                        style="color: var(--text-main); font-size: 1.2rem;" aria-label="Toggle Theme">
-                        <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="5" />
-                            <path
-                                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                        </svg>
-                    </button>
-                    <a href="https://linkedin.com/in/sabarivasan1507" target="_blank" class="social-icon"
-                        style="color: var(--text-main);" aria-label="LinkedIn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                            </path>
-                            <rect x="2" y="9" width="4" height="12"></rect>
-                            <circle cx="4" cy="4" r="2"></circle>
-                        </svg>
-                    </a>
-                    <a href="https://github.com/Sabarivasan1507" target="_blank" class="social-icon"
-                        style="color: var(--text-main);" aria-label="GitHub">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                            </path>
-                        </svg>
-                    </a>
-                </div>
             </div>
         </div>
     </nav>
 
-    <section class="container hero-container d-flex align-items-center justify-content-center text-center"
-        style="min-height: 100vh;">
-        <div class="w-100">
-            <h1 id="heroTitle" class="hero-text mb-4">SABARIVASAN</h1>
-            <p class="hero-description mb-5"
-                style="letter-spacing: -0.01em; font-weight: 400; color: var(--text-main);">
-                Building a futuristic digital landscape with code and design. Specializing in <span
-                    style="color: var(--accent-primary); font-weight: 600;">Full-Stack</span> & <span
-                    style="color: var(--accent-secondary); font-weight: 600;">Visual Engineering</span>.
-            </p>
-            <div class="hero-action">
-                <a href="#projects" class="btn btn-main">View Selected Works</a>
-            </div>
+    <section class="hero">
+        <div class="floating-shape" style="top: 10%; right: 10%; animation: floatAnim 15s infinite alternate;"></div>
+        <div class="floating-shape"
+            style="bottom: 20%; left: -5%; background: radial-gradient(circle, rgba(168, 85, 247, 0.1), transparent); animation: floatAnim 12s infinite alternate-reverse;">
         </div>
-
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-10 reveal">
+                    <h1 class="hero-title">Sabarivasan S P <br><span class="gradient-text">UI/UX Designer</span></h1>
+                    <p class="hero-tagline">Architecting high-fidelity digital landscapes where functionality meets
+                        sophisticated, modern aesthetics. Focused on premium SaaS experiences.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#work" class="btn-premium btn-primary-premium">View Selected Work</a>
+                        <a href="#contact" class="btn-premium btn-outline-premium">Let's Talk</a>
+                    </div>
+                </div>
             </div>
-            <span style="font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;">Scroll</span>
         </div>
     </section>
 
-    <section id="about" class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="glass-container p-5 text-center gsap-reveal">
-                    <div class="position-absolute top-0 end-0 p-4 opacity-10">
-                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
+    <section id="about">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5 text-center reveal">
+                    <div class="profile-frame">
+                        <img src="profile.png" alt="Sabarivasan S P">
                     </div>
+                </div>
+                <div class="col-lg-7 reveal">
+                    <div class="glass-card">
+                        <h2 class="fw-bold mb-4">The Design Philosophy</h2>
+                        <p class="text-muted fs-5 mb-4">
+                            Currently a B.Tech CSBS student at KSRCT, I specialize in bridging the gap between technical
+                            mastery and user-centric aesthetics. Every interaction I design is built to feel
+                            intentional, smooth, and premium.
+                        </p>
+                        <div class="mb-2">
+                            <h6 class="fw-bold text-uppercase small ls-wide mb-3">Core Expertise</h6>
+                            <div class="d-flex flex-wrap">
+                                <span class="skill-tag">MERN Stack</span>
+                                <span class="skill-tag">Visual Engineering</span>
+                                <span class="skill-tag">React.js</span>
+                                <span class="skill-tag">Python Architecture</span>
+                                <span class="skill-tag">Material Design</span>
+                                <span class="skill-tag">Figma Prototyping</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section id="work" class="bg-white">
+        <div class="container">
+            <div class="text-center mb-5 reveal">
+                <h2 class="fw-bold fs-1">Selected Works</h2>
+                <p class="text-muted">A collection of premium digital products.</p>
+            </div>
+            <div class="row g-5">
+                <div class="col-md-6 reveal">
+                    <div class="project-card">
+                        <div class="project-thumb">
+                            <img src="mobicart.png" alt="Mobicart">
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h4 class="fw-bold mb-1">Mobicart App</h4>
+                                    <span class="text-primary small fw-bold text-uppercase">MERN Stack</span>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-0">High-fidelity mobile ordering experience built from scratch.
+                                Focuses on frictionless cart interactions and secure authentication.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 reveal">
+                    <div class="project-card">
+                        <div class="project-thumb">
+                            <img src="polylingo.png" alt="Polylingua">
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h4 class="fw-bold mb-1">Polylingua</h4>
+                                    <span class="text-primary small fw-bold text-uppercase">Python • AI</span>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-0">Intelligent transition design breaking global language barriers.
+                                Powered by custom NLP models for nuanced structural translation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="case-study">
+        <div class="container">
+            <div class="glass-card reveal">
+                <span class="text-primary fw-bold text-uppercase small ls-wide">Process Breakdown</span>
+                <h2 class="case-study-title mt-2">Dashboard Redesign Ecosystem</h2>
+                <div class="case-grid">
+                    <div class="case-item">
+                        <h5>Problem</h5>
+                        <p>Legacy data panels were causing cognitive overload, leading to high abandonment rates in the
+                            professional analytics suite.</p>
+                    </div>
+                    <div class="case-item">
+                        <h5>Research</h5>
+                        <p>User heatmaps revealed that 70% of the screen real estate was occupied by non-essential data
+                            used by less than 5% of users.</p>
+                    </div>
+                    <div class="case-item">
+                        <h5>Process</h5>
+                        <p>Iterative wireframing focused on negative space and visual hierarchy to surface core health
+                            metrics instantly.</p>
+                    </div>
+                    <div class="case-item">
+                        <h5>Solution</h5>
+                        <p>Developed a modular "Soft Neumorphic" widget system that allows users to customize their view
+                            based on priority.</p>
+                    </div>
+                    <div class="case-item">
+                        <h5>Outcome</h5>
+                        <p>Reduced time-to-insight by 40% and improved overall platform usability scores by 25 points
+                            based on post-launch surveys.</p>
+                    </div>
+                </div>
+                <a href="#contact" class="btn-premium btn-primary-premium">Discuss This Project</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center reveal">
                     <div class="mb-5">
-                        <img src="profile.png" alt="Sabarivasan S P" class="profile-hero-img mb-4"
-                            style="border: 4px solid rgba(255,255,255,0.1); padding: 5px;">
-                        <h2 class="fw-bold mb-2 fs-1 split-heading" style="font-family: 'Outfit', sans-serif;">About Me
-                        </h2>
-                        <p id="aboutParagraph" class="fs-5 mb-0 mx-auto"
-                            style="max-width: 700px; line-height: 1.8; color: var(--text-main);">
-                            Architecting digital solutions where functionality meets <span
-                                style="color: var(--text-main);">sophisticated design</span>.
-                            Bridging the gap between technical mastery and user-centric aesthetics.
-                        </p>
+                        <h2 class="fw-bold fs-1">Let's build something elite.</h2>
+                        <p class="text-muted">Available for premium freelance collaborations and visionary product
+                            design.</p>
                     </div>
-
-                    <div class="row text-start g-4 mb-5">
-                        <div class="col-md-6">
-                            <h4 class="fw-bold mb-4"
-                                style="font-family: 'Outfit', sans-serif; color: var(--text-main);">Academia
-                            </h4>
-                            <div class="cert-card">
-                                <div class="text-muted small mb-1">Bachelor of Technology</div>
-                                <div class="fw-bold fs-5 mb-2">Computer Science & Business Systems</div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <span class="badge bg-white text-black rounded-pill px-3">CGPA: 7.50</span>
-                                </div>
+                    <div class="glass-card text-start p-4 mb-5">
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label class="fw-bold small mb-2">Name</label>
+                                <input type="text" class="form-control" placeholder="Enter your name">
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="fw-bold mb-4"
-                                style="font-family: 'Outfit', sans-serif; color: var(--text-main);">
-                                Certifications</h4>
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <div class="cert-card py-2 px-3 small">Industry 4.0</div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="cert-card py-2 px-3 small">Internet of Things</div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="cert-card py-2 px-3 small">NCC B-Cert</div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="cert-card py-2 px-3 small">TSC Selection</div>
-                                </div>
+                            <div class="mb-3">
+                                <label class="fw-bold small mb-2">Email Address</label>
+                                <input type="email" class="form-control" placeholder="example@domain.com">
                             </div>
-                        </div>
+                            <div class="mb-4">
+                                <label class="fw-bold small mb-2">How can I help?</label>
+                                <textarea class="form-control" rows="4"
+                                    placeholder="Brief about your project"></textarea>
+                            </div>
+                            <button type="submit" class="btn-premium btn-primary-premium w-100">Initialize
+                                Contact</button>
+                        </form>
                     </div>
-
-                    <hr class="my-5 opacity-10">
-
-                    <h4 class="fw-bold mb-4 split-heading" style="color: var(--text-main);">Stack & Tools</h4>
-                    <div class="d-flex flex-wrap justify-content-center">
-                        <span class="tag">Next.js</span> <span class="tag">React</span>
-                        <span class="tag">Node.js</span> <span class="tag">MongoDB</span>
-                        <span class="tag">Python</span> <span class="tag">Figma</span>
-                        <span class="tag">Git & GitHub</span> <span class="tag">Powershell</span>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="https://linkedin.com/in/sabarivasan1507" class="social-link"><svg width="20"
+                                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                <rect x="2" y="9" width="4" height="12" />
+                                <circle cx="4" cy="4" r="2" />
+                            </svg></a>
+                        <a href="mailto:sabarivasansabarivasan14@gmail.com" class="social-link"><svg width="20"
+                                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg></a>
+                        <a href="https://github.com/Sabarivasan1507" class="social-link"><svg width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                            </svg></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="container py-5">
-        <h2 class="fw-bold text-center mb-5 split-heading" style="font-family: 'Outfit', sans-serif; font-size: 3rem;">
-            Technical Expertise</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="skill-box gsap-reveal">
-                    <div class="skill-category-title">Frontend</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="16 18 22 12 16 6"></polyline>
-                        <polyline points="8 6 2 12 8 18"></polyline>
-                    </svg>
-                    <h4 class="fw-bold mb-3" style="color: var(--text-main);">Modern Engineering</h4>
-                    <p class="text-muted small mb-0">React, Next.js, Bootstrap, Glassmorphism, Responsive Design.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="skill-box gsap-reveal">
-                    <div class="skill-category-title">Backend</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                    </svg>
-                    <h4 class="fw-bold mb-3" style="color: var(--text-main);">Scalable Architectures</h4>
-                    <p class="text-muted small mb-0">Node.js, Express, Python (Full Stack), MongoDB, REST APIs.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="skill-box gsap-reveal">
-                    <div class="skill-category-title">Workflow</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    <h4 class="fw-bold mb-3" style="color: var(--text-main);">Digital Tooling</h4>
-                    <p class="text-muted small mb-0">Git, GitHub, VS Code, Power BI, Figma Design.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="container py-5 mb-5">
-        <h2 class="fw-bold text-center mb-5 split-heading" style="font-family: 'Outfit', sans-serif; font-size: 3rem;">
-            Selected Works</h2>
-        <div class="row g-5">
-            <div class="col-md-6">
-                <div class="project-card gsap-reveal" data-bs-toggle="modal" data-bs-target="#projectModal"
-                    data-title="MERN STACK – MOBICART" data-img="mobicart.png"
-                    data-desc="Mobicart is a high-fidelity mobile ordering experience built completely from scratch using the MERN stack (MongoDB, Express, React, Node.js). It streamlines the shopping process with dynamic carts, secure user authentication, and a clean, responsive UI."
-                    data-hover-text="👁️ View">
-                    <div class="project-image-wrapper p-4">
-                        <img src="mobicart.png" alt="Mobicart Cover" style="width: 100%; height: 100%;">
-                    </div>
-                    <h4 class="fw-bold mb-2 fs-3 split-heading" style="font-family: 'Outfit', sans-serif;">Mobicart App
-                    </h4>
-                    <p class="text-muted">Mobile Ordering UI/UX — MERN Stack</p>
-                </div>
-            </div>
-            <div class="col-md-6 project-stagger">
-                <div class="project-card gsap-reveal" data-bs-toggle="modal" data-bs-target="#projectModal"
-                    data-title="PYTHON – POLYLINGUA" data-img="polylingo.png"
-                    data-desc="Polylingua breaks global language barriers through an intelligent translation design powered by Python. It provides fast, accurate text translations and leverages natural language processing to understand nuanced language structures across various dialects."
-                    data-hover-text="👁️ View">
-                    <div class="project-image-wrapper p-4">
-                        <img src="polylingo.png" alt="Polylingo Cover" style="width: 100%; height: 100%;">
-                    </div>
-                    <h4 class="fw-bold mb-2 fs-3 split-heading" style="font-family: 'Outfit', sans-serif;">Polylingua
-                        Translation</h4>
-                    <p class="text-muted">Intelligent API — Python Full Stack</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Project Modal Element -->
-    <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content"
-                style="border-radius: 40px; border: 1px solid rgba(255,255,255,0.1); background: var(--surface); color: var(--text-main); overflow: hidden; box-shadow: 0 50px 100px rgba(0,0,0,0.8);">
-                <div class="modal-header border-0 pb-0 position-absolute w-100"
-                    style="z-index: 10; display: flex; justify-content: flex-end;">
-                    <button type="button" class="btn-close btn-close-white rounded-circle p-2 m-4 shadow-sm"
-                        data-bs-dismiss="modal" aria-label="Close"
-                        style="opacity: 0.9; margin-left: auto; background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1);"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <div
-                        style="width: 100%; height: 400px; overflow: hidden; background: #111; display: flex; align-items: center; justify-content: center;">
-                        <img id="modalProjectImage" src="" alt="Project Cover"
-                            style="max-width: 90%; max-height: 90%; object-fit: contain;">
-                    </div>
-                    <div class="p-5">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <h2 id="modalProjectTitle" class="fw-bold mb-0" style="font-family: 'Outfit', sans-serif;">
-                                Project Title</h2>
-                        </div>
-                        <hr class="opacity-10 my-4">
-                        <p id="modalProjectDesc" class="text-muted" style="font-size: 1.15rem; line-height: 1.8;">
-                            Detailed explanation goes here.
-                        </p>
-                        <div class="mt-5 d-flex gap-3">
-                            <button class="btn btn-main py-3 px-5" data-bs-dismiss="modal">Close Project</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer id="contact" class="container-fluid text-center py-5 my-5 overflow-hidden">
-        <div class="marquee-wrapper mb-4">
-            <div class="marquee-track">
-                <h2 class="marquee-text">Let's work together. — Let's work together. — </h2>
-                <h2 class="marquee-text">Let's work together. — Let's work together. — </h2>
-            </div>
-        </div>
-        <div class="position-relative z-3">
-            <p class="text-muted mb-5 fs-4">sabarivasansabarivasan14@gmail.com</p>
-            <div class="d-flex justify-content-center gap-3 gsap-reveal">
-                <a href="https://github.com/Sabarivasan1507" class="btn btn-main py-3 px-5 fs-5 float-hover"
-                    data-hover-text="🔗 Link">View My GitHub</a>
-            </div>
+    <footer class="py-5 border-top bg-white">
+        <div class="container text-center text-muted">
+            <p class="mb-0 small">© 2026 Sabarivasan S P. Engineered with vision and elegance.</p>
         </div>
     </footer>
 
-    <!-- GSAP & SplitType for Advanced Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Disable Custom Cursor on Touch Devices (Mobile Responsive logic)
-        const isTouchDevice = () => {
-            return (('ontouchstart' in window) ||
-                (navigator.maxTouchPoints > 0) ||
-                (navigator.msMaxTouchPoints > 0));
+        // Premium Cursor Follow (lerp for 60fps smoothness)
+        const cursor = document.querySelector('.cursor-glow');
+        let mouseX = 0, mouseY = 0;
+        let ballX = 0, ballY = 0;
+        const lerpFactor = 0.12;
+
+        function animateCursor() {
+            let distX = mouseX - ballX;
+            let distY = mouseY - ballY;
+            ballX = ballX + (distX * lerpFactor);
+            ballY = ballY + (distY * lerpFactor);
+            cursor.style.transform = `translate(${ballX - 150}px, ${ballY - 150}px)`;
+            requestAnimationFrame(animateCursor);
         }
+        animateCursor();
 
-        // Cursor logic removed
-
-        // Modal Data Injection Logic
-        const projectModal = document.getElementById('projectModal');
-        projectModal.addEventListener('show.bs.modal', event => {
-            const card = event.relatedTarget;
-            const title = card.getAttribute('data-title');
-            const imgSrc = card.getAttribute('data-img');
-            const desc = card.getAttribute('data-desc');
-
-            document.getElementById('modalProjectTitle').textContent = title;
-            document.getElementById('modalProjectImage').src = imgSrc;
-            document.getElementById('modalProjectDesc').textContent = desc;
+        document.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
-        // Initialize Global GSAP
-        // Theme Toggle Logic
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const sunIcon = `<circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />`;
-        const moonIcon = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />`;
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            themeIcon.innerHTML = theme === 'light' ? moonIcon : sunIcon;
-
-            // Adjust navbar inversion for visibility
-            const navbarToggler = document.querySelector('.navbar-toggler');
-            if (theme === 'light') {
-                navbarToggler.style.filter = 'invert(0)';
-                document.querySelectorAll('.nav-link, .navbar-brand, #themeToggle, .social-icon').forEach(el => {
-                    el.style.color = '#000';
-                });
-            } else {
-                navbarToggler.style.filter = 'invert(1)';
-                document.querySelectorAll('.nav-link, .navbar-brand, #themeToggle, .social-icon').forEach(el => {
-                    el.style.color = '#fff';
-                });
-            }
-        }
-
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(savedTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            setTheme(currentTheme === 'light' ? 'dark' : 'light');
-        });
-
-        gsap.registerPlugin(ScrollTrigger);
-
-        // 1. GLOBAL SCREEN ANIMATION (Batch Staggering elements up)
-        gsap.set('.gsap-reveal', { y: 100, autoAlpha: 0 }); // Pre-hide all elements designated for global animation
-        ScrollTrigger.batch('.gsap-reveal', {
-            interval: 0.1, // delay between batches
-            batchMax: 3,   // max items per batch burst
-            onEnter: batch => gsap.to(batch, {
-                opacity: 1,
-                visibility: 'visible',
-                y: 0,
-                stagger: { each: 0.15, grid: [1, 3] }, // The beautiful cascading effect
-                ease: 'power4.out',
-                duration: 1.2
-            }),
-            once: true
-        });
-
-        // 2. UNIVERSAL SLICED TEXT REVEALS (All headings)
-        const headings = document.querySelectorAll('.split-heading');
-        headings.forEach((heading) => {
-            const splitText = new SplitType(heading, { types: 'lines' });
-            gsap.from(splitText.lines, {
-                scrollTrigger: {
-                    trigger: heading,
-                    start: 'top 90%', // Trigger earlier dynamically
-                },
-                y: 100, // Slice up from hidden
-                opacity: 0,
-                duration: 1.2,
-                stagger: 0.05,
-                ease: 'power4.out'
+        // Hover Context Awareness
+        const interactives = document.querySelectorAll('a, button, .project-card, .glass-card, .form-control');
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '120px';
+                cursor.style.height = '120px';
+                cursor.style.background = 'radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '300px';
+                cursor.style.height = '300px';
+                cursor.style.background = 'radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%)';
             });
         });
 
-        // 3. ABOUT PARAGRAPH SPECIFIC MASKING
-        const aboutParagraph = new SplitType('#aboutParagraph', { types: 'lines' });
-        gsap.from(aboutParagraph.lines, {
-            scrollTrigger: {
-                trigger: "#aboutParagraph",
-                start: "top 85%"
-            },
-            y: 60,
-            opacity: 0,
-            stagger: 0.1,
-            duration: 1.2,
-            ease: "power3.out"
-        });
-
-        // 4. HERO SECTION KINETIC PARALLAX
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".hero-container",
-                start: "top top",
-                end: "bottom top",
-                scrub: 1
-            }
-        });
-
-        // The "Shrink Wrap" leaving effect
-        tl.to(".hero-container .w-100", {
-            scale: 0.85,
-            opacity: 0,
-            y: 50,
-            ease: "power1.inOut"
-        });
-
-        // Kinetic Staggered Letters on load
-        const heroTitle = new SplitType('#heroTitle', { types: 'chars' });
-        gsap.set('#heroTitle', { visibility: 'visible' }); // Show container after split
-        gsap.from(heroTitle.chars, {
-            autoAlpha: 0, // Handles both opacity and visibility
-            y: 150,
-            rotationX: -90,
-            stagger: 0.04,
-            duration: 1.5,
-            ease: "power4.out",
-            delay: 0.2
-        });
-
-        // 5. PROJECT LOGO DEEP PARALLAX (Camera Zoom Out)
-        gsap.utils.toArray('.project-image-wrapper img').forEach(img => {
-            gsap.fromTo(img,
-                { scale: 1.2, opacity: 0.8 },
-                {
-                    scale: 1,
-                    opacity: 1,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: img.parentElement,
-                        start: "top bottom",
-                        end: "bottom center",
-                        scrub: true
-                    }
+        // Scroll Reveal Intersection Observer
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
                 }
-            );
+            });
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Form Submission Interaction
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'Initializing...';
+            btn.style.opacity = '0.7';
+            setTimeout(() => {
+                btn.innerText = 'Sent Successfully. 🎉';
+                btn.style.background = '#22c55e';
+                btn.style.opacity = '1';
+                e.target.reset();
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = '';
+                }, 3000);
+            }, 1200);
         });
 
-        // 6. FOOTER INFINITE MARQUEE
-        gsap.to(".marquee-track", {
-            xPercent: -50,
-            repeat: -1,
-            duration: 30, // Slower for more elegance
-            ease: "linear"
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
-
     </script>
 </body>
 
